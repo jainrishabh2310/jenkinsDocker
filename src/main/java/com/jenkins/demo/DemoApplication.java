@@ -11,7 +11,7 @@ public class DemoApplication {
 
 	@RequestMapping("/api")
 	public String api() {
-		return "Hlo API rishabh";
+		return "Hlo API rishabh bhai";
 	}
 	
 	public static void main(String[] args) {
