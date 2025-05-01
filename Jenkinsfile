@@ -2,13 +2,27 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME      = 'myapp-image'
-        CONTAINER_NAME  = 'tender_ishizaka'
-        HOST_PORT       = '8080'
-        CONT_PORT       = '8080'
+        IMAGE_NAME     = 'myapp-image'
+        CONTAINER_NAME = 'jenkins'
+        HOST_PORT      = '8080'
+        CONT_PORT      = '8080'
     }
 
     stages {
+    
+    
+    
+     stage('Stop Old Container') {
+            steps {
+                script {
+                    // Try to stop by name; if not running, just echo and continue
+                    bat """
+                      docker stop ${CONTAINER_NAME} || echo No running container named ${CONTAINER_NAME}
+                    """
+                }
+            }
+        }
+    
         stage('Build Docker Image') {
             steps {
                 script {
@@ -17,19 +31,7 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
-            steps {
-                script {
-                    // Correctly filter by name=tender_ishizaka
-                    bat '''
-                      for /f "tokens=*" %%i in ('docker ps -q -f "name=%CONTAINER_NAME%"') do (
-                        echo Stopping container %%i...
-                        docker stop %%i
-                      )
-                    '''
-                }
-            }
-        }
+       
 
         stage('Run Docker Container') {
             steps {
