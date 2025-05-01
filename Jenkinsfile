@@ -20,13 +20,13 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 script {
-                    // Stop the container if it is running (ignores errors if not)
-                    bat """
-                      for /f "tokens=*" %%i in ('docker ps -q -f name=%CONTAINER_NAME%') do (
+                    // Correctly filter by name=tender_ishizaka
+                    bat '''
+                      for /f "tokens=*" %%i in ('docker ps -q -f "name=%CONTAINER_NAME%"') do (
                         echo Stopping container %%i...
                         docker stop %%i
                       )
-                    """
+                    '''
                 }
             }
         }
