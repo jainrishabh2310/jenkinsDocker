@@ -9,13 +9,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your public repo
-                git url: 'https://github.com/jainrishabh2310/jenkinsDocker.git', branch: 'main'
-            }
-        }
-
         stage('Clean Old Container') {
             steps {
                 script {
