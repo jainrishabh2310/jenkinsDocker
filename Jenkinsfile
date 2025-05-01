@@ -3,26 +3,12 @@ pipeline {
 
     environment {
         IMAGE_NAME     = 'myapp-image'
-        CONTAINER_NAME = 'jenkins'
+        CONTAINER_NAME = 'jenkins'           // your desired container name
         HOST_PORT      = '8080'
         CONT_PORT      = '8080'
     }
 
     stages {
-    
-    
-    
-     stage('Stop Old Container') {
-            steps {
-                script {
-                    // Try to stop by name; if not running, just echo and continue
-                    bat """
-                      docker stop ${CONTAINER_NAME} || echo No running container named ${CONTAINER_NAME}
-                    """
-                }
-            }
-        }
-    
         stage('Build Docker Image') {
             steps {
                 script {
@@ -31,7 +17,17 @@ pipeline {
             }
         }
 
-       
+        stage('Cleanup Old Container') {
+            steps {
+                script {
+                    // Force remove any existing container with this name
+                    bat """
+                      echo Cleaning up old container...
+                      docker rm -f ${CONTAINER_NAME} || echo 'No old container to remove'
+                    """
+                }
+            }
+        }
 
         stage('Run Docker Container') {
             steps {
