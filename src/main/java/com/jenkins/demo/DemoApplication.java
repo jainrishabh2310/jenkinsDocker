@@ -15,7 +15,7 @@ public class DemoApplication {
 	}
 
 	@RequestMapping("/post")
-	public String api() {
+	public String post() {
 		return "Docker With Jenkins runs Success using post API";
 	}
 	
