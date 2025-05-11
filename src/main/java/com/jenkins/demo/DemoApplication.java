@@ -13,6 +13,11 @@ public class DemoApplication {
 	public String api() {
 		return "Docker With Jenkins runs Success";
 	}
+
+	@RequestMapping("/post")
+	public String api() {
+		return "Docker With Jenkins runs Success using post API";
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
